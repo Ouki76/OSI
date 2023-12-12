@@ -4,11 +4,17 @@ async function loop() {
     const wss = new ws.WebSocketServer({ port: 3030 });
 
     wss.on('connection', (client) => {
-        client.on('error', console.error);
 
-        client.on('message', (data) => {
-            console.log(data.toString())
-        });
+        switch (client.protocol.toString()) {
+            case "osi-client": {
+                client.on('message', (data) => {
+                    console.log(data.toString())
+                });
+            }
+            default: client.close();
+        }
+
+        client.on('error', console.error);
     });
 }
 
