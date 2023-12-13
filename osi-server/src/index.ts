@@ -4,7 +4,6 @@ async function loop() {
     const wss = new ws.WebSocketServer({ port: 3030 });
 
     wss.on('connection', (client) => {
-
         switch (client.protocol.toString()) {
             case "osi-client": {
                 client.on('message', (data) => {
